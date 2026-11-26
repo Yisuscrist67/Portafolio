@@ -130,3 +130,13 @@ footer{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;paddin
   html{scroll-behavior:auto}
   .cursor{display:none!important}
 }
+/* ---------- Ocultar cursor del sistema (solo PC) ---------- */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  html, body, a, button, label { cursor: none; }
+  input, textarea { cursor: text; }
+}
+
+/* Cursor oscuro sobre la sección naranja */
+.cursor.dark { border-color: var(--accent-ink); }
+.cursor.dark.on { background: var(--accent-ink); }
+.cursor.dark b { color: var(--accent); }
