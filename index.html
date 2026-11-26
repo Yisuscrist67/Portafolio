@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chris Vivas — Diseño gráfico y dirección de arte</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<header class="bar">
+  <a class="logo" href="#top">Chris Vivas</a>
+  <nav class="nav" aria-label="Principal">
+    <a href="#grafico">Trabajo</a>
+    <a href="#sobre">Sobre mí</a>
+    <a href="#contacto">Contacto</a>
+    <a class="pill" href="#contacto">Hablemos ↗</a>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="band">
+    <div class="wrap hero">
+      <div>
+        <h1>Diseño gráfico &amp; dirección de arte.</h1>
+        <p>Identidades, portadas y campañas para marcas y artistas que quieren verse como suenan.</p>
+        <div class="ctas">
+          <a class="pill" href="#grafico">Ver trabajos</a>
+          <a class="pill ghost" href="#contacto">Empezar un proyecto</a>
+        </div>
+      </div>
+      <div class="collage" id="collage" aria-label="Collage de proyectos destacados"></div>
+    </div>
+  </section>
+
+  <div class="marquee" aria-hidden="true"><div class="track" id="skills"></div></div>
+  <div class="marquee" aria-hidden="true" style="border-top:0"><div class="track rev" id="clients"></div></div>
+
+  <section class="band" id="grafico">
+    <div class="wrap">
+      <div class="head">
+        <div><h2>Diseño gráfico</h2><p>Branding, portadas, afiches y piezas para redes.</p></div>
+        <a class="pill ghost" href="#grafico">Ver todo</a>
+      </div>
+      <div class="rail" id="rail" tabindex="0" aria-label="Proyectos de diseño gráfico"></div>
+      <div class="arrows">
+        <button type="button" id="prev" aria-label="Anterior">←</button>
+        <button type="button" id="next" aria-label="Siguiente">→</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="arte" style="padding-top:0">
+    <div class="wrap">
+      <div class="head">
+        <div><h2>Dirección de arte</h2><p>Sesiones, videos y campañas: del moodboard al set.</p></div>
+        <a class="pill ghost" href="#arte">Ver todo</a>
+      </div>
+      <div class="grid-ad" id="ad"></div>
+    </div>
+  </section>
+
+  <section class="band" id="rubros" style="padding-top:0">
+    <div class="wrap">
+      <div class="head"><h2>Rubros</h2></div>
+      <ul class="rubros" id="rubrosList"></ul>
+    </div>
+  </section>
+
+  <section class="band" id="sobre" style="padding-top:0">
+    <div class="wrap about">
+      <div class="portrait" id="portrait"></div>
+      <div>
+        <h2 style="margin-bottom:20px">Sobre mí</h2>
+        <p class="big">Soy Christopher Vivas, <em>diseñador gráfico y director de arte</em>. Trabajo con marcas, músicos y equipos creativos para construir imágenes con carácter: desde la idea y el moodboard hasta la pieza final.</p>
+        <div class="facts">
+          <span>Santiago, Chile</span><span>Branding</span><span>Cover art</span><span>Campañas</span><span>Fotografía</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band cta" id="contacto">
+    <div class="wrap cta-grid">
+      <div>
+        <h2>Cuéntame qué estás creando.</h2>
+        <p class="mail">o escríbeme a chrisssential@gmail.com · @chrisssential</p>
+      </div>
+      <form id="form" novalidate>
+        <input id="f-name" name="nombre" placeholder="Tu nombre" autocomplete="name" required>
+        <input id="f-mail" name="email" type="email" placeholder="Tu email" autocomplete="email" required>
+        <textarea id="f-msg" name="mensaje" placeholder="¿Qué proyecto tienes en mente?" required></textarea>
+        <button class="pill" type="submit">Enviar →</button>
+        <p class="sent" id="sent" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>© 2026 Christopher Vivas</span>
+  <span>Instagram · Behance · LinkedIn</span>
+</footer>
+<p class="note">Prototipo con piezas y clientes de muestra: se reemplazan por el trabajo real de Chris.</p>
+
+<div class="cursor" id="cursor" aria-hidden="true"><b id="cursorLabel">Ver proyecto</b></div>
+
+<script src="js/main.js" defer></script>
+</body>
+</html>
