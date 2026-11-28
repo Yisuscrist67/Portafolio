@@ -62,6 +62,7 @@ h2{font-size:clamp(32px,5vw,52px);line-height:1.05;letter-spacing:-.03em;font-we
 .head p{color:var(--muted);max-width:46ch;margin-top:8px}
 .rail{display:grid;grid-auto-flow:column;grid-auto-columns:clamp(240px,30vw,380px);gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:12px;scrollbar-width:thin}
 .rail>*{scroll-snap-align:start}
+.card .thumb img{width:100%;height:100%;object-fit:cover;display:block}
 .card .thumb{aspect-ratio:4/5;border-radius:8px;overflow:hidden;transition:transform .35s}
 .card:hover .thumb{transform:scale(.98)}
 .card h3{font-size:18px;font-weight:600;margin-top:12px;letter-spacing:-.01em}
