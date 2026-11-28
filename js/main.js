@@ -65,6 +65,37 @@ document.getElementById('ad').innerHTML = ad.map(([t,m],i)=>
   `<a class="card" href="#arte" data-cursor="Ver proyecto"><div class="thumb">${art(i+4,t.toUpperCase(),m,48)}</div><h3>${t}</h3><p class="meta">${m}</p></a>`
 ).join('');
 
+// Proyectos reales desde Sanity (si falla o está vacío, quedan las piezas de muestra)
+const SANITY = { id: 'slugmlsh', dataset: 'production', v: '2025-01-01' };
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c =>
+  ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+const cardReal = (p, href) =>
+  `<a class="card" href="${href}" data-cursor="Ver proyecto">
+     <div class="thumb"><img src="${esc(p.img)}?w=900&auto=format" alt="${esc(p.alt || p.titulo)}" loading="lazy"></div>
+     <h3>${esc(p.titulo)}</h3>
+     <p class="meta">${esc(p.categoria)}${p.fecha ? ' · ' + p.fecha.slice(0, 4) : ''}</p>
+   </a>`;
+
+(async () => {
+  const q = `*[_type=="proyecto"] | order(orden asc, fecha desc){
+    titulo, categoria, fecha, "img": portada.asset->url, "alt": portada.alt
+  }`;
+  const url = `https://${SANITY.id}.apicdn.sanity.io/v${SANITY.v}/data/query/${SANITY.dataset}?query=${encodeURIComponent(q)}`;
+  try {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(res.status);
+    const { result } = await res.json();
+    if (!result.length) return;
+    const arte = result.filter(p => p.categoria === 'Dirección de arte');
+    const grafico = result.filter(p => p.categoria !== 'Dirección de arte');
+    if (grafico.length) rail.innerHTML = grafico.map(p => cardReal(p, '#grafico')).join('');
+    if (arte.length) document.getElementById('ad').innerHTML = arte.map(p => cardReal(p, '#arte')).join('');
+  } catch (err) {
+    console.error('Sanity:', err);
+  }
+})();
+
 // Rubros
 const rubros = [['Música','12 proyectos'],['Branding','9 proyectos'],['Campañas','6 proyectos'],['Editorial','4 proyectos'],['Fotografía','8 proyectos'],['Packaging','3 proyectos']];
 document.getElementById('rubrosList').innerHTML = rubros.map(([t,c],i)=>
