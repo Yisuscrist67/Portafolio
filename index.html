@@ -105,6 +105,18 @@
 </footer>
 <p class="note">Prototipo con piezas y clientes de muestra: se reemplazan por el trabajo real de Chris.</p>
 
+<dialog class="visor" id="visor" aria-labelledby="visorTitulo">
+  <div class="visor-head">
+    <div>
+      <h2 id="visorTitulo"></h2>
+      <p class="meta" id="visorMeta"></p>
+    </div>
+    <button class="visor-cerrar" id="visorCerrar" aria-label="Cerrar">✕</button>
+  </div>
+  <p class="visor-desc" id="visorDesc"></p>
+  <div class="visor-fotos" id="visorFotos"></div>
+</dialog>
+
 <div class="cursor" id="cursor" aria-hidden="true"><b id="cursorLabel">Ver proyecto</b></div>
 
 <script src="js/main.js" defer></script>

@@ -140,3 +140,17 @@ footer{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;paddin
 .cursor.dark { border-color: var(--accent-ink); }
 .cursor.dark.on { background: var(--accent-ink); }
 .cursor.dark b { color: var(--accent); }
+
+/* Visor de proyecto */
+.visor{border:0;padding:0;width:min(1100px,92vw);max-height:90vh;margin:auto;background:var(--bg);color:var(--ink);border-radius:12px;overflow:auto}
+.visor::backdrop{background:rgba(0,0,0,.8)}
+.visor, .visor *{cursor:auto}
+.visor-head{position:sticky;top:0;z-index:1;display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:24px 28px;background:var(--bg);border-bottom:1px solid var(--line)}
+.visor-head h2{font-size:clamp(24px,3vw,36px);font-weight:800;letter-spacing:-.03em;line-height:1}
+.visor-head .meta{color:var(--muted);font-size:14px;margin-top:6px}
+.visor-cerrar{width:44px;height:44px;flex:none;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--ink);font-size:16px;cursor:pointer}
+.visor-cerrar:hover{border-color:var(--ink)}
+.visor-desc{padding:20px 28px 0;color:var(--muted);max-width:65ch}
+.visor-desc:empty{display:none}
+.visor-fotos{display:grid;gap:12px;padding:20px 28px 28px}
+.visor-fotos img{width:100%;height:auto;display:block;border-radius:6px}
