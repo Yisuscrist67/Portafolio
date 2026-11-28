@@ -69,9 +69,10 @@ document.getElementById('ad').innerHTML = ad.map(([t,m],i)=>
 const SANITY = { id: 'slugmlsh', dataset: 'production', v: '2025-01-01' };
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c =>
   ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let proyectos = [];
 
-const cardReal = (p, href) =>
-  `<a class="card" href="${href}" data-cursor="Ver proyecto">
+const cardReal = (p, i) =>
+  `<a class="card" href="#" data-i="${i}" data-cursor="Ver proyecto">
      <div class="thumb"><img src="${esc(p.img)}?w=900&auto=format" alt="${esc(p.alt || p.titulo)}" loading="lazy"></div>
      <h3>${esc(p.titulo)}</h3>
      <p class="meta">${esc(p.categoria)}${p.fecha ? ' · ' + p.fecha.slice(0, 4) : ''}</p>
@@ -79,7 +80,9 @@ const cardReal = (p, href) =>
 
 (async () => {
   const q = `*[_type=="proyecto"] | order(orden asc, fecha desc){
-    titulo, categoria, fecha, "img": portada.asset->url, "alt": portada.alt
+    titulo, categoria, cliente, fecha, descripcion,
+    "img": portada.asset->url, "alt": portada.alt,
+    "galeria": galeria[]{ "url": asset->url, alt }
   }`;
   const url = `https://${SANITY.id}.apicdn.sanity.io/v${SANITY.v}/data/query/${SANITY.dataset}?query=${encodeURIComponent(q)}`;
   try {
@@ -87,14 +90,44 @@ const cardReal = (p, href) =>
     if (!res.ok) throw new Error(res.status);
     const { result } = await res.json();
     if (!result.length) return;
-    const arte = result.filter(p => p.categoria === 'Dirección de arte');
-    const grafico = result.filter(p => p.categoria !== 'Dirección de arte');
-    if (grafico.length) rail.innerHTML = grafico.map(p => cardReal(p, '#grafico')).join('');
-    if (arte.length) document.getElementById('ad').innerHTML = arte.map(p => cardReal(p, '#arte')).join('');
+    proyectos = result;
+    const html = (filtro) => result
+      .map((p, i) => filtro(p) ? cardReal(p, i) : '')
+      .join('');
+    const esArte = p => p.categoria === 'Dirección de arte';
+    if (result.some(p => !esArte(p))) rail.innerHTML = html(p => !esArte(p));
+    if (result.some(esArte)) document.getElementById('ad').innerHTML = html(esArte);
   } catch (err) {
     console.error('Sanity:', err);
   }
 })();
+
+// Visor de proyecto
+const visor = document.getElementById('visor');
+
+const abrirVisor = (p) => {
+  document.getElementById('visorTitulo').textContent = p.titulo;
+  document.getElementById('visorMeta').textContent =
+    [p.categoria, p.cliente, p.fecha?.slice(0, 4)].filter(Boolean).join(' · ');
+  document.getElementById('visorDesc').textContent = p.descripcion || '';
+  const fotos = [{ url: p.img, alt: p.alt }, ...(p.galeria || [])];
+  document.getElementById('visorFotos').innerHTML = fotos
+    .filter(f => f.url)
+    .map(f => `<img src="${esc(f.url)}?w=1600&auto=format" alt="${esc(f.alt || p.titulo)}" loading="lazy">`)
+    .join('');
+  visor.showModal();
+  visor.scrollTop = 0;
+};
+
+document.addEventListener('click', (e) => {
+  const card = e.target.closest('.card[data-i]');
+  if (!card) return;
+  e.preventDefault();
+  abrirVisor(proyectos[card.dataset.i]);
+});
+
+document.getElementById('visorCerrar').addEventListener('click', () => visor.close());
+visor.addEventListener('click', (e) => { if (e.target === visor) visor.close(); });
 
 // Rubros
 const rubros = [['Música','12 proyectos'],['Branding','9 proyectos'],['Campañas','6 proyectos'],['Editorial','4 proyectos'],['Fotografía','8 proyectos'],['Packaging','3 proyectos']];
